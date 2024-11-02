@@ -630,7 +630,7 @@ body {
     opacity: 0.1;
   }
   100% {
-    top: 1000px;
+    top: var(--top);
     transform: rotate(500deg) translateX(250%);
   }
 }
