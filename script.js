@@ -175,6 +175,7 @@ let bgmHowlId;
 let betXSound = false;
 let gameStartSound = false;
 let tryAgainSound = false;
+let loadCount = 0;
 
 const volArray = [
   0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45,
@@ -185,6 +186,10 @@ const volArray = [
 
 var bgmHowl = new Howl({
   src: ['mp3/bgm.mp3'],
+  onload: function() {
+    loadCount++;
+    // console.log(loadCount); //*log
+  },
   loop: true,
   volume: 0.1, 
   //* volume must between 0.0 ~ 2.0
@@ -1390,6 +1395,35 @@ const fetchImage = document.querySelector('.frame');
       setTimeout(() => fetchImage.classList.remove('active'), 2000);
     }, duration);
   }
+
+  //* loader Event -------------------------------
+
+const panelImages = document.querySelectorAll('.panelImage');
+panelImages.forEach(img => {
+  img.addEventListener('load', loadImages);
+});
+
+function loadImages() {
+  loadCount++;
+  // console.log(loadCount); //* log
+}
+
+const loader = document.querySelector('.loader');
+const iid_load = setInterval(() => {
+  if(loadCount === 4) {
+    loader.querySelectorAll('img').forEach(img => {
+      img.classList.remove('active');
+      img.style.opacity = 0;
+    });
+    panelImages.forEach(img => {
+      img.removeEventListener('load', loadImages);
+    });
+    loader.style.opacity = 0;
+    setTimeout(() => loader.remove(), 1000);
+    clearInterval(iid_load);
+  }
+}, 10);
+
 
 // ---------------------------------------------------------------------------------------------------
 
