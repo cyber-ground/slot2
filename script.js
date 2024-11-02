@@ -32,6 +32,7 @@ class Panel {
     const section = document.createElement('section'); 
       section.classList.add('panel');
         this.img = document.createElement('img');
+        this.img.classList.add('panelImage');
         this.img.src = this.getRandomImg();
         this.stopBtn = document.createElement('div');
         this.stopBtn.classList.add('stop');
