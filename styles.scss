@@ -774,10 +774,10 @@ body {
 
 .js_insertPoint-activeEffect {    
   box-shadow: 
-  3px 3px 10px rgb(179, 255, 0), 
-  3px -3px 10px rgb(179, 255, 0), 
-  -3px 3px 10px rgb(179, 255, 0),
-  -3px -3px 10px rgb(179, 255, 0);
+  0 0 2px 3px rgb(179, 255, 0), 
+  0 0 2px 3px rgb(179, 255, 0), 
+  0 0 2px 3px rgb(179, 255, 0),
+  0 0 2px 3px rgb(179, 255, 0);
 }
 
 .js_bet2x-activeEffect {
