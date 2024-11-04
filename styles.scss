@@ -14,13 +14,13 @@ body {
   background-color: #333;
   font-weight: bold;
   height: 100vh;
-  // height: -webkit-fill-available;
-  overflow: hidden;
-  @media (min-width: 431px){
-    background-color: black;
-  }
   transform-style: preserve-3d;
   perspective: 1500px;
+  overflow: hidden;
+  // height: -webkit-fill-available;
+  @media (min-width: 431px){
+    background-color: #000;
+  }
 }
 
 .loader {
@@ -79,156 +79,165 @@ body {
     display: none;
   }
   .unit-inner {
-      .active-btn-container {
-        .active-btn {
-          padding: .5rem;
-          padding-top: .6rem;
-          font-size: 1.2rem;
-          letter-spacing: 1px;
-          text-align: center;
-          border-radius: 20px;
-          margin: 5px 5px; 
+    .active-btn-container {
+      .active-btn {
+        padding: .5rem;
+        padding-top: .6rem;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        text-align: center;
+        border-radius: 20px;
+        margin: 5px 5px; 
+        @media (min-width: 375px) and (max-height: 667px) {
+          font-size: 0.8em; //* iphone SE
+        }
+        @media (max-width: 365px) {
+          font-size: 0.9rem; //* Galaxy Note3 S5
+        }
+      }
+      .check-out {
+        width: calc(60% - 10px);
+        margin: 0 auto 10px;   
+        color: rgba(255, 220, 25, 0.6);      
+        border: 8px outset rgba(254, 190, 13, 0.7);  
+        &.active {
+          color: rgb(255, 221, 25);      
+          border: 8px outset rgb(254, 188, 13);
+        }
+        &.notification {
+          animation: notification 1s linear infinite forwards;
+        }
+      }
+      .active-btn-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .btn-insert {
+          font-size: 1rem;
+          color: rgba(116, 225, 20);
+          border: 8px outset rgba(78, 166, 1);
+          width: calc(50% - 10px); // thisOn
+          // padding: .5rem .7rem; // thisOff
+          &.active {
+            color: rgba(116, 225, 20, 0.5);
+            border: 8px outset rgba(78, 166, 1, 0.6);
+          }
           @media (min-width: 375px) and (max-height: 667px) {
             font-size: 0.8em; //* iphone SE
           }
           @media (max-width: 365px) {
-            font-size: 0.9rem; //* Galaxy Note3 S5
+            font-size: 0.8rem; //* Galaxy Note3 S5
+          }
+          @media (max-width: 325px) {
+            font-size: 0.6rem; //* Galaxy S9
           }
         }
-        .check-out {
-          width: calc(60% - 10px);
-          margin: 0 auto 10px;   
-          color: rgb(255, 221, 25);      
-          border: 8px outset rgb(254, 188, 13); 
-        }
-        .active-btn-wrapper {
+        .betX-wrapper {
+          // width: calc(50% - 10px); // thisOff
           display: flex;
-          justify-content: center;
           align-items: center;
-          .btn-insert {
-            font-size: 1rem;
-            color: rgb(115, 225, 20);
-            border: 8px outset rgb(79, 166, 1);
-            width: calc(50% - 10px); // thisOn
-            // padding: .5rem .7rem; // thisOff
-            @media (min-width: 375px) and (max-height: 667px) {
-              font-size: 0.8em; //* iphone SE
-            }
+          justify-content: center;
+          margin-left: 0px; // adjustable 
+          .btn-bet2x {
+            color: rgba(187, 2, 212, 0.6);
+            border: 8px outset rgb(189, 2, 212); 
+          }
+          .btn-bet5x {
+            color: rgb(201, 43, 40, 0.6);
+            border: 8px outset rgb(252, 55, 53);
+          }
+          .btn-bigSpinX {
+            letter-spacing: 0px;
+            padding: .5rem .6rem .4rem; 
+            border: 8px outset #a1a3a4; 
+            color: rgb(213, 48, 45);
+          }
+        }
+      } 
+    }
+    .point-container {
+      display: flex;
+      justify-content: center;
+      margin: 10px auto;
+      @media (min-width: 375px) and (max-height: 667px) {
+        margin: 5px auto 10px; //* iphone
+      }
+      width: 100%;
+      .point-wrapper {
+        width: calc(25% - 6px);
+        margin: 0 3px;
+        padding: .3rem;
+        border-radius: 20px;
+        border: 4px outset rgb(186, 180, 180);  
+        .point-text {
+          font-size: .8rem;
+          margin-top: 3px;
+          text-align: center;
+          letter-spacing: 1px;
+        }
+        .point {
+          font-size: 1.2rem;
+          text-align: center;
+          margin-top: 5px;
+          @media (max-width: 365px) {
+            font-size: 1rem; //* Galaxy Note3 S5
+          }
+        }
+      }
+      .win-wrapper {
+        .win-text {
+          color: yellow;
+        }
+        .win-point {
+          color: rgb(226, 219, 219);  
+          &.adjustFontSize.bigSpinFontSize {
             @media (max-width: 365px) {
-              font-size: 0.8rem; //* Galaxy Note3 S5
+              //* Galaxy Note3 S5
+              font-size: 0.8rem !important;
             }
             @media (max-width: 325px) {
-              font-size: 0.6rem; //* Galaxy S9
+              //* Galaxy S9
+              font-size: 0.7rem !important;
             }
           }
-          .betX-wrapper {
-            // width: calc(50% - 10px); // thisOff
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 0px; // adjustable 
-            .btn-bet2x {
-              color: rgb(189, 2, 212);
-              border: 8px outset rgb(189, 2, 212); 
+          &.adjustFontSize.pumpkinFontSize {
+            font-size: 0.8rem !important; //* iphone
+            @media (max-width: 365px) { 
+              //* Galaxy Note3 S5
+              font-size: 0.7rem !important;
             }
-            .btn-bet5x {
-              color: rgb(201, 43, 40);
-              border: 8px outset rgb(252, 55, 53);
+            @media (max-width: 325px) {
+              //* Galaxy S9
+              font-size: 0.6rem !important;
             }
-            .btn-bigSpinX {
-              letter-spacing: 0px;
-              padding: .5rem .6rem .4rem; 
-              border: 8px outset #a1a3a4; 
-              color: rgb(213, 48, 45);
-            }
-          }
-        } 
-      }
-    
-      .point-container {
-        display: flex;
-        justify-content: center;
-        margin: 10px auto;
-        @media (min-width: 375px) and (max-height: 667px) {
-          margin: 5px auto 10px; //* iphone
-        }
-        width: 100%;
-        .point-wrapper {
-          width: calc(25% - 6px);
-          margin: 0 3px;
-          padding: .3rem;
-          border-radius: 20px;
-          border: 4px outset rgb(186, 180, 180);  
-          .point-text {
-            font-size: .8rem;
-            margin-top: 3px;
-            text-align: center;
-            letter-spacing: 1px;
-          }
-          .point {
-            font-size: 1.2rem;
-            text-align: center;
-            margin-top: 5px;
-            @media (max-width: 365px) {
-              font-size: 1rem; //* Galaxy Note3 S5
-            }
-          }
-        }
-        .win-wrapper {
-          .win-text {
-            color: yellow;
-          }
-          .win-point {
-            color: rgb(226, 219, 219);  
-            &.adjustFontSize.bigSpinFontSize {
-              @media (max-width: 365px) {
-                //* Galaxy Note3 S5
-                font-size: 0.8rem !important;
-              }
-              @media (max-width: 325px) {
-                //* Galaxy S9
-                font-size: 0.7rem !important;
-              }
-            }
-            &.adjustFontSize.pumpkinFontSize {
-              font-size: 0.8rem !important; //* iphone
-              @media (max-width: 365px) { 
-                //* Galaxy Note3 S5
-                font-size: 0.7rem !important;
-              }
-              @media (max-width: 325px) {
-                //* Galaxy S9
-                font-size: 0.6rem !important;
-              }
-            }
-          }
-        }
-        .total-wrapper {
-          .total-text {
-            color: rgb(6, 223, 6); 
-          }
-          .total-point {
-            color: rgb(255, 255, 255);
-          }
-        }
-        .bet-wrapper {
-          .bet-text {
-            color: #fff; 
-          }
-          .bet-point {
-            color: rgb(0, 174, 255); 
-          }
-        }
-        .dept-wrapper {
-          .dept-text {
-            color: rgb(0, 174, 255); 
-          }
-          .dept-point {
-            color: #fff; 
           }
         }
       }
-
+      .total-wrapper {
+        .total-text {
+          color: rgb(6, 223, 6); 
+        }
+        .total-point {
+          color: rgb(255, 255, 255);
+        }
+      }
+      .bet-wrapper {
+        .bet-text {
+          color: #fff; 
+        }
+        .bet-point {
+          color: rgb(0, 174, 255); 
+        }
+      }
+      .dept-wrapper {
+        .dept-text {
+          color: rgb(0, 174, 255); 
+        }
+        .dept-point {
+          color: #fff; 
+        }
+      }
+    }
     .machine-container {
       width: 98%;
       margin: auto;
@@ -302,7 +311,6 @@ body {
           }
         }
       }
-
       #spin {
         width: 100%;
         height: 60px; 
@@ -526,7 +534,6 @@ body {
   border-radius: 50%;
   animation: squareRange 3s linear forwards;
   transform-origin: 0 center; 
-  // background-color: #ffff004d;
   z-index: 100;
 }
 .squareOne {
@@ -566,13 +573,13 @@ body {
     transition: 1s;
     opacity: 0;
     display: none;
-    // z-index: 200; //* loadData dancing *******
+    z-index: 200; //* loadData dancing *******
     &.active {
       display: block;
     }
     &.alpha {
-      opacity: 1; //* Cheer 
-      // opacity: .8; //* loadData dancing *******
+      // opacity: 1; //* Cheer 
+      opacity: .8; //* loadData dancing *******
       transition: 2s;
     }
     @media (min-width: 431px) {
@@ -596,10 +603,18 @@ body {
   height: 100%; 
   display: inline-block;
   border-radius: 10px;
-  background-color: rgba(51, 51, 51, 0.392); // for black background
+  background-color: rgba(51, 51, 51, 0.392);
 }
 
 //* keyframes -----------------------------------------------------------
+
+
+@keyframes notification {
+  50% {
+    color: rgba(255, 220, 25, 0.2);      
+    border: 8px outset rgba(254, 190, 13, 0.3); 
+  }
+}
 
 @keyframes animateLoader {
   0% { opacity: 1; }
@@ -657,10 +672,10 @@ body {
 }
 
 .js_stopBtnAnimation {
-  animation: stopBtnAnimation .1s; // stop .1s 
+  animation: stopBtnAnimation .1s;
 }
 .js_spinBtnAnimation {
-  animation: spinBtnAnimation .2s; // spin .2s 
+  animation: spinBtnAnimation .2s;
 }
 
 @keyframes stopBtnAnimation {
@@ -668,8 +683,8 @@ body {
     transform: translateY(0px);
     box-shadow: 0 4px 0 #9a423b;
   }
-  50% {
-    transform: translateY(6px);  // box shadow px + 2px 
+  50% { //* box shadow px + 2px
+    transform: translateY(6px);   
     box-shadow: 0 0px 0 #9a423b;
   }
   100% {
@@ -683,8 +698,8 @@ body {
     transform: translateY(0px);
     box-shadow: 0 6px 0 #226794;
   }
-  50% {
-    transform: translateY(8px); // box shadow px + 2px 
+  50% { //* box shadow px + 2px 
+    transform: translateY(8px); 
     box-shadow: 0 0px 0 #226794;
   }
   100% {
@@ -723,6 +738,7 @@ body {
     border: 8px outset #bec1c4; 
   }
 }
+
 // -----------------------------------------------------
 
 .js_insertPoint-textColorBright {
@@ -765,19 +781,17 @@ body {
 }
 
 .js_bet2x-activeEffect {
-  box-shadow: 
-  3px 3px 12px 1px rgb(228, 8, 221),   
-  3px -3px 12px 1px rgb(228, 8, 221),  
-  -3px 3px 12px 1px rgb(228, 8, 221),  
-  -3px -3px 12px 1px rgb(228, 8, 221); 
+  box-shadow: 0 0 0 1px rgb(51, 51, 51),
+  inset 0 0 0 1px rgb(51, 51, 51),
+  inset 0 0 2px 3px rgb(228, 8, 221, 0.5), 
+  0 0 3px 5px rgb(228, 8, 221), 
 }
 
 .js_bet5x-activeEffect {
-  box-shadow: 
-  3px 3px 12px 1px rgb(255, 25, 0), 
-  3px -3px 12px 1px rgb(255, 25, 0), 
-  -3px 3px 12px 1px rgb(255, 25, 0),
-  -3px -3px 12px 1px rgb(255, 25, 0);
+  box-shadow: 0 0 0 1px rgb(51, 51, 51),
+  inset 0 0 0 1px rgb(51, 51, 51),
+  inset 0 0 2px 3px rgba(255, 25, 0, 0.5), 
+  0 0 3px 5px rgb(255, 25, 0), 
 }
 
 // -----------------------------------------------------

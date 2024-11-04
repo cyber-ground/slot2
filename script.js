@@ -31,15 +31,15 @@ class Panel {
     const main = document.querySelector('main');
     const section = document.createElement('section'); 
       section.classList.add('panel');
-        this.img = document.createElement('img');
-        this.img.classList.add('panelImage');
-        this.img.src = this.getRandomImg();
-        this.stopBtn = document.createElement('div');
-        this.stopBtn.classList.add('stop');
-        this.stopBtn.textContent = 'STOP';
-        this.stopBtn.Howl = new Howl({ src: ['mp3/stop.mp3'], volume: 0.5});
-        this.stopBtn.volume = this.stopBtn.Howl._volume/1.5;
-        this.panelShadow = document.createElement('span');
+      this.img = document.createElement('img');
+      this.img.classList.add('panelImage');
+      this.img.src = this.getRandomImg();
+      this.stopBtn = document.createElement('div');
+      this.stopBtn.classList.add('stop');
+      this.stopBtn.textContent = 'STOP';
+      this.stopBtn.Howl = new Howl({ src: ['mp3/stop.mp3'], volume: 0.5});
+      this.stopBtn.volume = this.stopBtn.Howl._volume/1.5;
+      this.panelShadow = document.createElement('span');
       section.appendChild(this.img);
       section.appendChild(this.stopBtn);
       section.appendChild(this.panelShadow); 
@@ -48,14 +48,14 @@ class Panel {
     this.stopBtn.addEventListener('click', () => { 
       if(!spinStopBtnEvent) return;
       if(this.stopBtn.classList.contains('js_inActive')) return; //***> 
-        this.stopBtn.classList.add('js_inActive'); //***> 
-        this.stopBtn.classList.add('js_stopBtnAnimation'); // trf animation
-        reelHandler.classList.remove('active'); 
-        reelHandler.removeEventListener('click', stopAutomate); 
-        this.stopBtn.Howl.play(); //*
+      this.stopBtn.classList.add('js_inActive'); //***> 
+      this.stopBtn.classList.add('js_stopBtnAnimation'); // trf animation
+      reelHandler.classList.remove('active'); 
+      reelHandler.removeEventListener('click', stopAutomate); 
+      this.stopBtn.Howl.play(); //*
       clearTimeout(this.timeout);
-        this.manipulateReel(); //^^^^^^^^^^^^^^^^^^^^^^^^ */
-        reelCount++
+      this.manipulateReel(); //^^^^^^^^^^^^^^^^^^^^^^^^ */
+      reelCount++
       panelsRemain--;
       // console.log(panelsRemain); //* log 
       if(panelsRemain === 0) { //* JUDGEMENT //
@@ -63,14 +63,13 @@ class Panel {
           winPoint.classList.remove('js_bigSpinRed'); // reset text & color 
           winPoint.classList.remove('adjustFontSize');
           bigSpinX.classList.remove('js_bigSpinX'); // BIG SPIN X remove
-          winPoint.textContent = 0; // needs higher then checkForFunction
-          winPoint.classList.remove('js_winRed'); 
+          winPointSetDefault();
         }
         freeSpinHowl.stop(); bigSpinHowl.stop(); 
         checkForMatchedAll(); checkForUnMatched(); checkForTwoPairMatched();  //* JUDGEMENT //
         checkForTwoPairSeven(); checkForTwoPairExtraSeven(); checkForExtraThreeSeven(); 
         checkForTwoPairExtraDiamond(); checkForTwoPairExtraDollar(); checkForTwoPairExtraPumpkin(); 
-        bigSpinFailure(); //* JUDGEMENT //
+        bigSpinFailure(); //* JUDGEMENT // //* JUDGEMENT //
         saveData(); //*** 
         panelsRemain = 3; // reset counter 
         [spinStopBtnEvent, activeLight] = [false, false]; 
@@ -79,20 +78,20 @@ class Panel {
           spinBtn.classList.remove('js_inActive'); // reset btn opacity 
           spinBtn.classList.remove('js_spinBtnAnimation'); // reset trf animation  
           bigSpinX.classList.remove('activate'); // reset bigSpinX activate //*
+          madeMillionaire(); //*>
         if(total === 0) {  // rewrite default message 
           spinBtn.textContent = 'INSERT MONEY TO PLAY';
-          betPoint.textContent = 0;
-          bgmHowl.stop(); bgmHowlId = ''; 
-          setTimeout(() => { tryAgainHowl.play() }, 500); 
-          insertMoney = false; //*
+            betPoint.textContent = 0;
+              deactivateBgmHowl(); //*
+              setTimeout(() => { tryAgainHowl.play() }, 500); 
+            insertMoney = false; //*
+          insertPoint.classList.remove('active');
         }
         if(currentDept === 0 && total <= 0)  { 
           checkOutDept = true; // game over
           checkOutLock = false;
+          checkOut.classList.remove('active');
         }
-        // if(insertPoint.classList.contains('js_blank')) { 
-        //   console.log('contain read in stop event');
-        // } //* BIG SPIN READ TEST
       }
     });
   } //* OUT OF Constructor 
@@ -104,7 +103,8 @@ class Panel {
   }
   
   manipulateImg() {
-    const image = ['img/pumpkin.jpg','img/bar.jpg','img/watermelon.jpg','img/cherry.jpg','img/bell.jpg'];
+    const image = ['img/pumpkin.jpg','img/bar.jpg',
+      'img/watermelon.jpg','img/cherry.jpg','img/bell.jpg'];
     return image[Math.floor(Math.random() * image.length)];
   }
 
@@ -152,23 +152,23 @@ const panels = [ new Panel(), new Panel(), new Panel() ]; //* instance ***
 
 //* reelHandler EventListener ----------------
 const reelHandler = document.querySelector('.reelHandler');
-function stopAutomate() {
-  if(stopAutomated) return;
-  autoStopHowl.play(); stopAutomated = true;
-  reelHandler.classList.remove('active');
-  setTimeout(() => { panels[0].stopBtn.click()}, 400);
-  setTimeout(() => { panels[1].stopBtn.click()}, 700);
-  setTimeout(() => { panels[2].stopBtn.click()}, 1200);
-}
-
-function bigSpinFailure() { //* bigSpinFailure
-  if(bigSpinX.classList.contains('activate') && !pointsAdded) {
-    bgmHowl.stop(); bgmHowlId = '';
-    getFetchData('failure', 50, 46, 0, 1500); //*** Cheer */ 
-    setTimeout(() => { bigSpinFailureHowl.play() }, 500);
-    setTimeout(() => { bigSpinFailureHowl.play() }, 1000);
+  function stopAutomate() {
+    if(stopAutomated) return;
+    autoStopHowl.play(); stopAutomated = true;
+    reelHandler.classList.remove('active');
+    setTimeout(() => { panels[0].stopBtn.click()}, 400);
+    setTimeout(() => { panels[1].stopBtn.click()}, 700);
+    setTimeout(() => { panels[2].stopBtn.click()}, 1200);
   }
-}
+
+  function bigSpinFailure() { //* bigSpinFailure
+    if(bigSpinX.classList.contains('activate') && !pointsAdded) {
+      deactivateBgmHowl(); //*
+      getFetchData('failure', 50, 46, 0, 1500);
+      setTimeout(() => { bigSpinFailureHowl.play() }, 500);
+      setTimeout(() => { bigSpinFailureHowl.play() }, 1000);
+    }
+  }
 
 //* audio sound event --------------------------------
 
@@ -213,6 +213,7 @@ var winHowl = new Howl({src: ['mp3/win.mp3'],volume: 1});
 var victoryHowl = new Howl({src: ['mp3/victory.mp3'],volume: 1});
 var bigSpinHowl = new Howl({src: ['mp3/bigSpin.mp3'], loop: true, volume: 0.5});
 var freeSpinHowl = new Howl({src: ['mp3/freeSpin.mp3'], loop: true, volume: 0.5});
+var checkOutNoticeHowl = new Howl({src: ['mp3/checkOutNotice.mp3'], volume: 0.5, loop: true});
 var bigSpinFailureHowl = new Howl({src: ['mp3/bigSpinFailure.mp3'], volume: 0.5});
 var tryAgainHowl = new Howl({src: ['mp3/tryAgain.mp3'], volume: 0.5,
   onplay: function() { tryAgainSound = true },
@@ -223,7 +224,6 @@ var tryAgainHowl = new Howl({src: ['mp3/tryAgain.mp3'], volume: 0.5,
   window.addEventListener('click', (evt) => {
     evt.preventDefault();
   });
-  
 
 //* BGM & Machine volume event --------------------------------
 
@@ -297,10 +297,11 @@ function setMachineVolume(vol) {
   bigSpinHowl.volume(vol); bigSpinFailureHowl.volume(vol);
   tryAgainHowl.volume(vol);
 }
+function deactivateBgmHowl() { bgmHowl.stop(); bgmHowlId = ''; }
 
-const mobile = navigator.userAgent.match(/iPhone|Android.+Mobile/);
-const myDeviceHeight = 720;
-const process_env = `${hCteFOTyEkyHpiG4}`;
+  const mobile = navigator.userAgent.match(/iPhone|Android.+Mobile/);
+  const myDeviceHeight = 720;
+  const process_env = `${hCteFOTyEkyHpiG4}`;
   const deviceHeight = innerHeight;
   let diff = deviceHeight - myDeviceHeight;
   const base64Str = `${GMOsiDoGYmhO}`;           
@@ -476,15 +477,18 @@ function checkForTwoPairExtraPumpkin() {
 
 //* point panel -------------------------------------------------
 
-const bigSpinX = document.querySelector('.btn-bigSpinX');
-const winPoint = document.querySelector('.win-point');
-  const totalPoint = document.querySelector('.total-point');
-    const betPoint = document.querySelector('.bet-point');
-      const deptPoint = document.querySelector('.dept-point');
-      winPoint.textContent = 0;
-    totalPoint.textContent = 0;
-  betPoint.textContent = 0;
-deptPoint.textContent = 0;
+  const bigSpinX = document.querySelector('.btn-bigSpinX');
+    const winPoint = document.querySelector('.win-point');
+      const totalPoint = document.querySelector('.total-point');
+        const betPoint = document.querySelector('.bet-point');
+        const deptPoint = document.querySelector('.dept-point');
+      const winText = document.querySelector('.win-text');
+    const totalText = document.querySelector('.total-text');
+      const betText = document.querySelector('.bet-text');
+        winPoint.textContent = 0;
+      totalPoint.textContent = 0;
+    betPoint.textContent = 0;
+  deptPoint.textContent = 0;
 
 //* save data to local storage ------------------------------------
 
@@ -509,7 +513,7 @@ function pointAdd_matchedAll() {
   if(panels[2].img.src.includes('seven')) {
     setTimeout(() => { coinTwoPairExtraHowl.play() }, 200); 
     cheerHowl.play(); releaseConfetti(300, 1); 
-    getFetchData('threeSeven', 70, 53, 0, 5000); 
+    getFetchData('threeSeven', 70, 53, 0, 5000);  
     pointRate(5000); pointsAdded = true;
     setTimeout(() => { winHowl.play() }, 3000); 
   } 
@@ -541,6 +545,7 @@ function pointAdd_matchedAll() {
     setTimeout(() => { coinTwoPairExtraHowl.play() }, 200);
     releaseConfetti(30, 150); cheerShortHowl.play(); 
     getFetchData('bar', 48, 55, 0, 3000); 
+    pointRate(1000); pointsAdded = true;
     setTimeout(() => { winHowl.play() }, 1800);
   } 
   else if(panels[2].img.src.includes('watermelon')) {
@@ -564,21 +569,19 @@ function pointAdd_matchedAll() {
     pointRate(500); pointsAdded = true;
     setTimeout(() => { winHowl.play() }, 1800);
   }
-  // if(insertPoint.classList.contains('js_blank')) { // BIG SPIN READ TEST 
-  //   console.log('contain read in pointAdd_matchedAll');
-  // }  
 }
 
+let tid_BigSpin;
 function activateBigSpinX() {
   //* spinBtn disabled dblclick
   [gameStartSound, betXSound] = [true, true]; 
-  setTimeout(() => { //* BIG SPIN //* BIG SPIN
+  tid_BigSpin = setTimeout(() => { //* BIG SPIN //* BIG SPIN
     panels.forEach(panel => { panel.spin() });
     bigSpinHowl.play(); //*** */
     bigSpin = true;
       bigSpinFlash = true; 
         applyCheckOut = true;
-      spinStopBtnEvent = true; // disabled dblclick 
+      spinStopBtnEvent = true; // disabled dblclick
     freeSpin = false; //*
     spinBtn.classList.add('js_inActive'); //* 
       insertPoint.classList.add('js_blank'); 
@@ -595,17 +598,18 @@ function activateBigSpinX() {
   }, 500); //* BIG SPIN //* 
 }
 
+let tid_freeSpin;
 function freeSpinPumpkinMatched() {
   //* spinBtn disabled dblclick
   [gameStartSound, betXSound] = [true, true]; 
-  setTimeout(() => { //* FREE SPIN //* FREE SPIN
+  tid_freeSpin = setTimeout(() => { //* FREE SPIN //* FREE SPIN
     panels.forEach(panel => { panel.spin() })
     freeSpinHowl.play(); //*** */
     freeSpin = true;
     bigSpin = true;
       activeLight = true; // disabled 5x2x click  
         applyCheckOut = true;
-      spinStopBtnEvent = true; // disabled dblclick 
+      spinStopBtnEvent = true; // disabled dblclick
     spinBtn.classList.add('js_inActive'); //* 
       insertPoint.classList.add('js_blank'); 
       winPoint.classList.remove('js_winRed');
@@ -765,9 +769,9 @@ function pointAdd_extraThreeSeven() {
     && panels[1].img.src.includes('seven') 
       && panels[2].img.src.includes('seven')) {
         setTimeout(() => { coinTwoPairExtraHowl.play() }, 200);
-        cheerHowl.play(); releaseConfetti(150, 100); 
+          cheerHowl.play(); releaseConfetti(150, 100); 
         getFetchData('twoRedSeven', 60, 55, 0, 3800); 
-        pointRate(2000); pointsAdded = true;
+      pointRate(2000); pointsAdded = true;
     setTimeout(() => { winHowl.play() }, 2000);
   }
   //* Three Seven // One redSeven
@@ -778,8 +782,8 @@ function pointAdd_extraThreeSeven() {
     && panels[1].img.src.includes('blueSeven') 
       && panels[2].img.src.includes('blueSeven')) {
         setTimeout(() => { coinTwoPairExtraHowl.play() }, 200);
-        cheerHowl.play(); releaseConfetti(150, 100); 
-        getFetchData('twoBlueSeven', 45, 45, 0, 3800);  
+          cheerHowl.play(); releaseConfetti(150, 100); 
+        getFetchData('twoBlueSeven', 45, 45, 0, 3800); 
       pointRate(1500); pointsAdded = true;
     setTimeout(() => { winHowl.play() }, 2000);
   }
@@ -1030,7 +1034,7 @@ function playerBet() {
 //* bet counter ---------------------------
 
 function betCounter() {
-  console.log('read bet counter'); //* log
+  // console.log('read bet counter'); //* log
     if(bet5x.classList.contains('js_bet5x-activeEffect') 
         && bet2x.classList.contains('js_bet2x-activeEffect')) {
       betAmount(500);
@@ -1058,16 +1062,13 @@ function betAmount(arg) {
 
 //* 5x2xBtn active effect turn off auto ---------
 
-function btn5x2x_ActiveEffect_TurnOffAuto() {
-  if(bet2x.classList.contains('js_bet2x-activeEffect') && total < 500) {
-    reset5x_activeEffect();
+  function btn5x2x_ActiveEffect_TurnOffAuto() {
+    if(bet2x.classList.contains('js_bet2x-activeEffect') && total < 500) {
+      reset5x_activeEffect();
+    }
+    if(total < 250) { reset5x_activeEffect()} 
+    if(total < 100) { reset2x_activeEffect()}                              
   }
-  if(total < 250) {
-    reset5x_activeEffect();
-  } if(total < 100) {
-    reset2x_activeEffect();
-  }                              
-}
 
   function reset2x_activeEffect() {
       bet2x.classList.remove('js_bet2x-activeEffect'); 
@@ -1082,87 +1083,162 @@ function btn5x2x_ActiveEffect_TurnOffAuto() {
 //* adjust point font size  -----------------------------------
 
   function adjustPointsFontSize() {
-    if(innerWidth > 375) { //* iphone
-      if(total > 9999999) {
-        totalPoint.style.fontSize = 0.9 + 'em';
-      } else if(total > 999999) {
-        totalPoint.style.fontSize = 1 + 'em';
-      } else { totalPoint.style.fontSize = 1.2 + 'em'}
-  
-      if(currentDept > 9999999) {
-        deptPoint.style.fontSize = 0.9 + 'em';
-      } else if(currentDept > 999999) {
-        deptPoint.style.fontSize = 1 + 'em';
-      } else { deptPoint.style.fontSize = 1.2 + 'em'}
-      
-      if(winPoint.textContent > 999999) {
-        winPoint.style.fontSize = 1 + 'em';
-      } else {winPoint.style.fontSize = ''}
+    if(innerWidth > 374) { //* iphone
+      if(total > 9999999) { totalPoint.style.fontSize = 0.9 + 'em'} 
+      else if(total > 999999) { totalPoint.style.fontSize = 1 + 'em'} 
+      else { totalPoint.style.fontSize = 1.2 + 'em'}
+      //* deptPoint ---
+      if(currentDept > 9999999) { deptPoint.style.fontSize = 0.9 + 'em'} 
+      else if(currentDept > 999999) { deptPoint.style.fontSize = 1 + 'em'} 
+      else { deptPoint.style.fontSize = 1.2 + 'em'}
+      //* winPoint ---
+      if(winPoint.textContent > 999999) { winPoint.style.fontSize = 1 + 'em'} 
+      else { winPoint.style.fontSize = ''}
     } 
     else if(innerWidth < 325) { //* Galaxy S9
-      if(total > 9999999) {
-        totalPoint.style.fontSize = 0.6 + 'em';
-      } else if(total > 999999) {
-        totalPoint.style.fontSize = 0.7 + 'em';
-      } else { totalPoint.style.fontSize = 0.9 + 'em'}
-  
-      if(currentDept > 9999999) {
-        deptPoint.style.fontSize = 0.6 + 'em';
-      } else if(currentDept > 999999) {
-        deptPoint.style.fontSize = 0.7 + 'em';
-      } else { deptPoint.style.fontSize = 0.9 + 'em'}
-      
-      if(winPoint.textContent > 999999) {
-        winPoint.style.fontSize = 1 + 'em';
-      } else {winPoint.style.fontSize = ''}
+      if(total > 9999999) { totalPoint.style.fontSize = 0.6 + 'em'} 
+      else if(total > 999999) { totalPoint.style.fontSize = 0.7 + 'em'} 
+      else { totalPoint.style.fontSize = 0.9 + 'em'}
+      //* deptPoint ---
+      if(currentDept > 9999999) { deptPoint.style.fontSize = 0.6 + 'em'} 
+      else if(currentDept > 999999) { deptPoint.style.fontSize = 0.7 + 'em'} 
+      else { deptPoint.style.fontSize = 0.9 + 'em'}
+      //* winPoint ---
+      if(winPoint.textContent > 999999) { winPoint.style.fontSize = 1 + 'em'} 
+      else { winPoint.style.fontSize = ''}
     }
     else if(innerWidth < 365) { //* Galaxy Note3 S5
-      if(total > 9999999) {
-        totalPoint.style.fontSize = 0.7 + 'em';
-      } else if(total > 999999) {
-        totalPoint.style.fontSize = 0.8 + 'em';
-      } else { totalPoint.style.fontSize = 1 + 'em'}
-  
-      if(currentDept > 9999999) {
-        deptPoint.style.fontSize = 0.7 + 'em';
-      } else if(currentDept > 999999) {
-        deptPoint.style.fontSize = 0.8 + 'em';
-      } else { deptPoint.style.fontSize = 1 + 'em'}
-      
-      if(winPoint.textContent > 999999) {
-        winPoint.style.fontSize = 1 + 'em';
-      } else {winPoint.style.fontSize = ''}
+      if(total > 9999999) { totalPoint.style.fontSize = 0.7 + 'em'} 
+      else if(total > 999999) { totalPoint.style.fontSize = 0.8 + 'em'} 
+      else { totalPoint.style.fontSize = 1 + 'em'}
+      //* deptPoint ---
+      if(currentDept > 9999999) { deptPoint.style.fontSize = 0.7 + 'em'} 
+      else if(currentDept > 999999) { deptPoint.style.fontSize = 0.8 + 'em'} 
+      else { deptPoint.style.fontSize = 1 + 'em';}
+      //* winPoint ---
+      if(winPoint.textContent > 999999) { winPoint.style.fontSize = 1 + 'em'} 
+      else { winPoint.style.fontSize = ''}
     }
   } 
+
+//* Game Over Func -------------------
+
+  function gameOver() {
+    if(currentDept > 99999999) {
+      [checkOutDept, applyCheckOut] = [true, true];
+      clearTimeout(tid_gameStartHowl);
+      checkOut.classList.add('js_checkOut-lost');
+      checkOut.textContent = `LOST ENOUGH`;
+      assignTextAndColor(winText, 'LOST', '#0af');
+      assignTextAndColor(totalText, 'BIG', '#0af');
+      assignTextAndColor(betText, 'TIME', '#0af');
+      assignTextAndColor(winPoint, 'YOU', '#f00');
+      assignTextAndColor(totalPoint, 'ARE', '#f00');
+      assignTextAndColor(betPoint,'DONE', '#f00');
+      assignTextAndColor(deptPoint, 'MILLION', '#0af');
+      if(localStorage.hasOwnProperty('playsOver')) return;
+      outFailureHowl.play(); insertHowl.stop();
+      localStorage.setItem('playsOver', true);
+    }
+  }
+
+  function assignTextAndColor(elem, txt, clr) {
+    elem.textContent = txt;
+    elem.style.color = clr;
+  }
+
+  function madeMillionaire() {
+    if(total > 99999999) {
+      assignTextAndColor(totalPoint, 'millionaire', '#ff0');
+      totalPoint.style.marginLeft = -1.5 + 'px';
+      assignTextAndColor(winText, 'WON', '#ff0');
+      assignTextAndColor(winPoint, 'BIG', '#00ff00e6');
+      assignTextAndColor(betPoint, 'END', '#0af');
+      betPoint.style.fontSize = '1em';
+      betPoint.style.marginTop = 7 + 'px'
+      if(currentDept === 0) {
+        applyCheckOut = true;
+        checkOutDept = true;
+        checkOut.classList.add('js_checkOut-win');
+        checkOut.textContent = `WIN + ${total - currentDept}`;
+        deactivateBgmHowl(); winHowl.volume(0); 
+        if(localStorage.hasOwnProperty('millionaire')) return;
+        clearTimeout(tid_BigSpin); clearTimeout(tid_freeSpin); 
+        localStorage.setItem('millionaire', true);
+        if(panels[2].matched(panels[1], panels[0])) {  
+          if(panels[2].img.src.includes('pumpkin')) {
+            victoryConfettiOne(1500);
+          } else if(panels[2].img.src.includes('diamond')) {
+            cheerHowl.play(); victoryConfettiOne(1500);
+          } else if(panels[2].img.src.includes('seven') 
+          || panels[2].img.src.includes('blueSeven')) {
+            victoryConfettiTwo(3500);
+          } else { cheerHowl.play(); victoryConfettiTwo(2000)} // else matched
+        } else { cheerHowl.play(); victoryConfettiOne(1500)} // twoPair
+      } else if(currentDept > 0 && (total - currentDept) > 99999999) {
+        clearTimeout(tid_BigSpin); clearTimeout(tid_freeSpin); 
+        releaseConfetti(300, 100); cheerHowl.play(); // Millionaire
+        checkOutDept = true; gameStartSound = false;
+        setTimeout(() => {
+          checkOutNoticeHowl.play();
+          checkOut.classList.add('notification');
+        }, 3000);
+      }
+    }
+  }
+
+  function victoryConfettiOne(duration) {  
+    releaseConfetti(600, 100);
+    outSuccessHowl.play();
+    setTimeout(() => { 
+      victoryHowl.play();
+    }, duration);
+  }
+
+  function victoryConfettiTwo(duration) {  
+    outSuccessHowl.play();
+    setTimeout(() => {
+      releaseConfetti(600, 100);
+      victoryHowl.play();
+    }, duration);
+  }
 
 
   //* insertPoint Event -------------------
 
-    const insertPoint = document.querySelector('.btn-insert');
+  let tid_gameStartHowl;
+  const insertPoint = document.querySelector('.btn-insert');
   insertPoint.addEventListener('click', () => {
     if(total > 0 || tryAgainSound) return;
     [insertMoney, checkOutLock] = [true, true];
     checkOutDept = false; 
     total += 10000; //*** 
     currentDept += 10000; //***
-    saveData(); //*** 
     insertHowl.play(); 
-    setTimeout(() => gameStartHowl.play(), 600); 
+    saveData(); //*** 
+    tid_gameStartHowl = setTimeout(() => gameStartHowl.play(), 600); 
     setTimeout(() => betXSound = false, 2100); 
     setTimeout(() => gameStartSound = false, 3600);
     winPoint.textContent = 0;
     betPoint.textContent = 0;
     totalPoint.textContent = total; 
-      deptPoint.textContent = currentDept; 
-        spinBtn.textContent = 'SPIN'; // rewrite textContent to SPIN 
-          checkOut.textContent = 'CHECK OUT'; 
+    deptPoint.textContent = currentDept; 
+     gameOver(); //*>
+      spinBtn.textContent = 'SPIN'; // rewrite textContent to SPIN 
+        checkOut.textContent = 'CHECK OUT'; 
           checkOut.classList.remove('js_checkOut-lost');
         insertPoint.classList.add('js_insertPoint-activeEffect'); // insert btn flash effect 
       insertPoint.classList.add('js_insertPoint-textColorBright');
+    checkOut.classList.add('active'); //*
     setTimeout(() => { 
         insertPoint.classList.remove('js_insertPoint-activeEffect');
       insertPoint.classList.remove('js_insertPoint-textColorBright');
+      insertPoint.classList.add('active');
     }, 300);
+    if(currentDept > 99999999) {
+      checkOut.classList.add('js_checkOut-lost');
+      checkOut.textContent = `LOST ENOUGH`;
+    }
   });
 
 
@@ -1203,6 +1279,7 @@ const checkOut = document.querySelector('.check-out');
   checkOut.addEventListener('click', function () {
     if(!checkOutLock || applyCheckOut) return;
     if(gameStartSound || tryAgainSound) return;
+    if(total === 0 && currentDept === 0) return;
     betPoint.textContent = 0;
     reset2x_activeEffect(); reset5x_activeEffect();
     checkOutLock = false;
@@ -1214,16 +1291,19 @@ const checkOut = document.querySelector('.check-out');
       total = total - currentDept;
       currentDept = 0;
       deptPoint.textContent = currentDept;
+      winPointSetDefault(); //*
       saveData() //***
+      madeMillionaire();
+      checkOutNoticeHowl.stop();
+      checkOut.classList.add('notification');
     } else if(currentDept > total) { 
-        bgmHowl.stop(); 
-          bgmHowlId = ''; 
+        deactivateBgmHowl(); //*
           outFailureHowl.play(); 
         checkOut.classList.add('js_checkOut-lost');
       checkOut.textContent = `LOST - ${currentDept - total}`;
     }
     else {
-      if(!checkOutDept) { // runs only (total even currentDept) 
+      if(!checkOutDept) { // runs only total even currentDept
         outSuccessHowl.play();
         deptPoint.textContent = total - currentDept;
           totalPoint.textContent = total - currentDept;
@@ -1231,11 +1311,22 @@ const checkOut = document.querySelector('.check-out');
               [checkOutDept, insertMoney] = [true, false];
             saveData() //***
           checkOut.textContent = `LOST - ${currentDept - total}`;
-        if(total === 0) { spinBtn.textContent = 'INSERT MONEY TO PLAY'; }
+          setTimeout(() => { checkOut.textContent = 'CHECK OUT' }, 3000);
+        if(total === 0) { 
+          insertPoint.classList.remove('active');
+          spinBtn.textContent = 'INSERT MONEY TO PLAY'; 
+          deactivateBgmHowl(); //*
+          winPointSetDefault(); //*
+          setTimeout(() => { checkOut.classList.remove('active')}, 3000);
+        }
       } 
     }
   }); 
 
+  function winPointSetDefault() {
+    winPoint.textContent = 0; // reset winPoint
+    winPoint.classList.remove('js_winRed'); // reset winRed
+  }
 
 //* SpinBtn Event -------------------
 
@@ -1244,10 +1335,9 @@ const spinBtn = document.getElementById('spin');
 
   spinBtn.addEventListener('click', () => { 
     if(gameStartSound || confetti || embedFrame) return;
-    if(bigSpin || checkOutDept) return;
+    if(bigSpin || checkOutDept || total === 0) return;
     bigSpinFlash = false;
-      winPoint.textContent = 0;  // reset winPoint  
-        winPoint.classList.remove('js_winRed'); // reset winRed 
+      winPointSetDefault(); //*
         checkOut.textContent = 'CHECK OUT';  // reset // check out text 
       checkOut.classList.remove('js_checkOut-win', 'js_checkOut-lost');
     if(total < 50) return; // when point 0 disable spinBtn click event 
@@ -1328,8 +1418,6 @@ const mp4s = ['img/Seoul.mp4', 'img/City.mp4'];
       });
     });
   } console.clear(); //* log clear
-  
-//* ---------------------------------------------------------------------------------
 
 //* Cheer Version (localStorage) ---------------------------------
 
@@ -1397,20 +1485,23 @@ const fetchImage = document.querySelector('.frame');
     }, duration);
   }
 
-  //* loader Event -------------------------------
+//* loader Event -------------------------------
 
 const panelImages = document.querySelectorAll('.panelImage');
-panelImages.forEach(img => {
-  img.addEventListener('load', loadImages);
-});
+  panelImages.forEach(img => {
+    img.addEventListener('load', loadImages);
+  });
 
 function loadImages() {
-  loadCount++;
-  // console.log(loadCount); //* log
+  loadCount++; // console.log(loadCount); //* log
 }
 
 const loader = document.querySelector('.loader');
 const iid_load = setInterval(() => {
+  if(total > 0) { insertPoint.classList.add('active')} //*
+  if(total > 0 || currentDept > 0) { checkOut.classList.add('active')} //*
+  if(localStorage.hasOwnProperty('playsOver')) { gameOver() }
+  if(localStorage.hasOwnProperty('millionaire')) { madeMillionaire() }
   if(loadCount === 4) {
     loader.querySelectorAll('img').forEach(img => {
       img.classList.remove('active');
@@ -1425,13 +1516,15 @@ const iid_load = setInterval(() => {
   }
 }, 10);
 
-
-// ---------------------------------------------------------------------------------------------------
-
-
-
-
-
+// ---------------------------------------------------------------------------------------------
+//* GET localStorage KEY ------------
+// function forEachKey() {
+//   for (let i = 0; i < localStorage.length; i++) {
+//     console.log(parseFloat(localStorage.key(i)));
+//     console.log(localStorage.key(i));
+//   }
+// } forEachKey();
+// ---------------------------------------------------------------------------------------------
 
 
 
