@@ -573,13 +573,13 @@ body {
     transition: 1s;
     opacity: 0;
     display: none;
-    z-index: 200; //* loadData dancing *******
+    // z-index: 200; //* loadData dancing *******
     &.active {
       display: block;
     }
     &.alpha {
-      // opacity: 1; //* Cheer 
-      opacity: .8; //* loadData dancing *******
+      opacity: 1; //* Cheer 
+      // opacity: .8; //* loadData dancing *******
       transition: 2s;
     }
     @media (min-width: 431px) {

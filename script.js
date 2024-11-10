@@ -78,7 +78,7 @@ class Panel {
           spinBtn.classList.remove('js_inActive'); // reset btn opacity 
           spinBtn.classList.remove('js_spinBtnAnimation'); // reset trf animation  
           bigSpinX.classList.remove('activate'); // reset bigSpinX activate //*
-          madeMillionaire(); //*>
+          isClosure(); //*>
         if(total === 0) {  // rewrite default message 
           spinBtn.textContent = 'INSERT MONEY TO PLAY';
             betPoint.textContent = 0;
@@ -164,7 +164,7 @@ const reelHandler = document.querySelector('.reelHandler');
   function bigSpinFailure() { //* bigSpinFailure
     if(bigSpinX.classList.contains('activate') && !pointsAdded) {
       deactivateBgmHowl(); //*
-      getFetchData('failure', 50, 46, 0, 1500);
+        loadFailureData(2000);
       setTimeout(() => { bigSpinFailureHowl.play() }, 500);
       setTimeout(() => { bigSpinFailureHowl.play() }, 1000);
     }
@@ -789,6 +789,7 @@ function pointAdd_extraThreeSeven() {
   }
 }
 
+
 //^ pointAdd // Two Pair Extra Diamond ----------------------------
 
 function pointAdd_twoPairExtraDiamond() {
@@ -937,8 +938,7 @@ function coinTwoPairHowlMix() {
 
 function pointRate(arg) { 
   winRed_add_bigSpinRed_remove(); //*
-  if(bet5x.classList.contains('js_bet5x-activeEffect') 
-  && bet2x.classList.contains('js_bet2x-activeEffect')) {
+  if(parseInt(betPoint.textContent) === 500) {
     if(insertPoint.classList.contains('js_blank') && !freeSpin) { //* X POINT 
       // console.log('contain read in checkBetAmount 5x2x');
       total += arg * 100; 
@@ -953,7 +953,7 @@ function pointRate(arg) {
         // console.log(' read in pointRate 5x2x');
       return;
     }
-  } else if(bet5x.classList.contains('js_bet5x-activeEffect')) {
+  } else if(parseInt(betPoint.textContent) === 250) {
     if(insertPoint.classList.contains('js_blank') && !freeSpin) { //* X POINT 
       // console.log('contain read in checkBetAmount 5x');
       total += arg * 50;
@@ -969,7 +969,7 @@ function pointRate(arg) {
       return;
     }
   }
-  if(bet2x.classList.contains('js_bet2x-activeEffect')) {
+  if(parseInt(betPoint.textContent) === 100) {
     if(insertPoint.classList.contains('js_blank') && !freeSpin) { //* X POINT 
       // console.log('contain read in checkBetAmount 2x');
       total += arg * 20;
@@ -1056,7 +1056,7 @@ function betCounter() {
 function betAmount(arg) {
   betPoint.textContent ='';
   setTimeout(() => {
-      betPoint.textContent = arg;
+    betPoint.textContent = arg;
   }, 50);
 }
 
@@ -1123,7 +1123,7 @@ function betAmount(arg) {
 
 //* Game Over Func -------------------
 
-  function gameOver() {
+  function isGameOver() {
     if(currentDept > 99999999) {
       [checkOutDept, applyCheckOut] = [true, true];
       clearTimeout(tid_gameStartHowl);
@@ -1136,9 +1136,9 @@ function betAmount(arg) {
       assignTextAndColor(totalPoint, 'ARE', '#f00');
       assignTextAndColor(betPoint,'DONE', '#f00');
       assignTextAndColor(deptPoint, 'MILLION', '#0af');
-      if(localStorage.hasOwnProperty('playsOver')) return;
+      if(localStorage.hasOwnProperty('gameOver')) return;
       outFailureHowl.play(); insertHowl.stop();
-      localStorage.setItem('playsOver', true);
+      localStorage.setItem('gameOver', true);
     }
   }
 
@@ -1146,25 +1146,24 @@ function betAmount(arg) {
     elem.textContent = txt;
     elem.style.color = clr;
   }
-
-  function madeMillionaire() {
+  
+  function isClosure() {
     if(total > 99999999) {
       assignTextAndColor(totalPoint, 'millionaire', '#ff0');
       totalPoint.style.marginLeft = -1.5 + 'px';
-      assignTextAndColor(winText, 'WON', '#ff0');
-      assignTextAndColor(winPoint, 'BIG', '#00ff00e6');
-      assignTextAndColor(betPoint, 'END', '#0af');
-      betPoint.style.fontSize = '1em';
-      betPoint.style.marginTop = 7 + 'px'
+      setClosureText(); checkOutNoticeHowl.stop();
+      checkOut.classList.remove('notification');
       if(currentDept === 0) {
-        applyCheckOut = true;
-        checkOutDept = true;
+        [applyCheckOut, checkOutDept] = [true, true];
         checkOut.classList.add('js_checkOut-win');
         checkOut.textContent = `WIN + ${total - currentDept}`;
         deactivateBgmHowl(); winHowl.volume(0); 
         if(localStorage.hasOwnProperty('millionaire')) return;
         clearTimeout(tid_BigSpin); clearTimeout(tid_freeSpin); 
         localStorage.setItem('millionaire', true);
+        localStorage.setItem('closure', true);
+        // winPoint.classList.remove('js_winRed');
+        setClosureText();
         if(panels[2].matched(panels[1], panels[0])) {  
           if(panels[2].img.src.includes('pumpkin')) {
             victoryConfettiOne(1500);
@@ -1182,8 +1181,12 @@ function betAmount(arg) {
         setTimeout(() => {
           checkOutNoticeHowl.play();
           checkOut.classList.add('notification');
+          localStorage.setItem('closure', true);
         }, 3000);
       }
+    } else { 
+      assignTextAndColor(totalPoint, total, '#fff');
+      totalPoint.style.marginLeft = '';
     }
   }
 
@@ -1203,6 +1206,15 @@ function betAmount(arg) {
     }, duration);
   }
 
+  function setClosureText() {
+    if(localStorage.hasOwnProperty('closure')) {
+      assignTextAndColor(winText, 'WON', '#ff0');
+      assignTextAndColor(winPoint, 'BIG', '#00ff00e6');
+      assignTextAndColor(betPoint, 'END', '#0af');
+      betPoint.style.fontSize = 1 + 'em';
+      betPoint.style.marginTop = 7 + 'px';
+    }
+  } 
 
   //* insertPoint Event -------------------
 
@@ -1223,7 +1235,7 @@ function betAmount(arg) {
     betPoint.textContent = 0;
     totalPoint.textContent = total; 
     deptPoint.textContent = currentDept; 
-     gameOver(); //*>
+      isGameOver(); //*>
       spinBtn.textContent = 'SPIN'; // rewrite textContent to SPIN 
         checkOut.textContent = 'CHECK OUT'; 
           checkOut.classList.remove('js_checkOut-lost');
@@ -1293,9 +1305,9 @@ const checkOut = document.querySelector('.check-out');
       deptPoint.textContent = currentDept;
       winPointSetDefault(); //*
       saveData() //***
-      madeMillionaire();
-      checkOutNoticeHowl.stop();
-      checkOut.classList.add('notification');
+      isClosure();
+      // checkOutNoticeHowl.stop();
+      // checkOut.classList.remove('notification');
     } else if(currentDept > total) { 
         deactivateBgmHowl(); //*
           outFailureHowl.play(); 
@@ -1485,6 +1497,8 @@ const fetchImage = document.querySelector('.frame');
     }, duration);
   }
 
+
+
 //* loader Event -------------------------------
 
 const panelImages = document.querySelectorAll('.panelImage');
@@ -1500,8 +1514,8 @@ const loader = document.querySelector('.loader');
 const iid_load = setInterval(() => {
   if(total > 0) { insertPoint.classList.add('active')} //*
   if(total > 0 || currentDept > 0) { checkOut.classList.add('active')} //*
-  if(localStorage.hasOwnProperty('playsOver')) { gameOver() }
-  if(localStorage.hasOwnProperty('millionaire')) { madeMillionaire() }
+  if(localStorage.hasOwnProperty('gameOver')) { isGameOver() }
+  if(localStorage.hasOwnProperty('closure')) { isClosure() }
   if(loadCount === 4) {
     loader.querySelectorAll('img').forEach(img => {
       img.classList.remove('active');

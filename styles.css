@@ -624,13 +624,12 @@ body {
   transition: 1s;
   opacity: 0;
   display: none;
-  z-index: 200;
 }
 .giphy .frame.active {
   display: block;
 }
 .giphy .frame.alpha {
-  opacity: 0.8;
+  opacity: 1;
   transition: 2s;
 }
 @media (min-width: 431px) {
