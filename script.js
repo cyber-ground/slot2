@@ -164,7 +164,7 @@ const reelHandler = document.querySelector('.reelHandler');
   function bigSpinFailure() { //* bigSpinFailure
     if(bigSpinX.classList.contains('activate') && !pointsAdded) {
       deactivateBgmHowl(); //*
-        loadFailureData(2000);
+        getFetchData('failure', 50, 46, 0, 1500);
       setTimeout(() => { bigSpinFailureHowl.play() }, 500);
       setTimeout(() => { bigSpinFailureHowl.play() }, 1000);
     }
