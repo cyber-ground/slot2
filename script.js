@@ -590,6 +590,7 @@ function activateBigSpinX() {
         bigSpinX.classList.add('js_bigSpinX');
         bigSpinX.classList.add('activate'); //***
         winPoint.textContent = 'BIG SPIN'; 
+        winPoint.style.marginTop = 7 +'px';
       winPoint.classList.add('adjustFontSize');
       winPoint.classList.add('bigSpinFontSize');
       reelHandler.classList.add('active'); //*
@@ -617,6 +618,7 @@ function freeSpinPumpkinMatched() {
         winPoint.classList.add('adjustFontSize');
         winPoint.classList.add('pumpkinFontSize');
       winPoint.textContent = 'FREE SPIN'; 
+      winPoint.style.marginTop = 8 +'px';
       reelHandler.classList.add('active'); //*
       reelHandler.addEventListener('click', stopAutomate); //*
     [gameStartSound, betXSound] = [false, false]; 
@@ -1338,6 +1340,7 @@ const checkOut = document.querySelector('.check-out');
   function winPointSetDefault() {
     winPoint.textContent = 0; // reset winPoint
     winPoint.classList.remove('js_winRed'); // reset winRed
+    winPoint.style.marginTop = ''; // reset freeSpin Margin
   }
 
 //* SpinBtn Event -------------------
