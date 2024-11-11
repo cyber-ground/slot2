@@ -97,8 +97,9 @@ class Panel {
   } //* OUT OF Constructor 
 
   getRandomImg() {
-    const images = ['img/bell.jpg','img/cherry.jpg','img/watermelon.jpg','img/diamond.jpg',
-      'img/bar.jpg','img/seven.jpg','img/dollar.jpg','img/pumpkin.jpg','img/blueSeven.jpg'];
+    const images = ['img/dollar.jpg','img/dollar.jpg','img/dollar.jpg','img/bell.jpg'];
+    // const images = ['img/bell.jpg','img/cherry.jpg','img/watermelon.jpg','img/diamond.jpg',
+    //   'img/bar.jpg','img/seven.jpg','img/dollar.jpg','img/pumpkin.jpg','img/blueSeven.jpg'];
     return images[Math.floor(Math.random() * images.length)];
   }
   
@@ -1291,7 +1292,7 @@ const checkOut = document.querySelector('.check-out');
   checkOut.addEventListener('click', function () {
     if(!checkOutLock || applyCheckOut) return;
     if(gameStartSound || tryAgainSound) return;
-    if(total === 0 && currentDept === 0) return;
+    if(currentDept === 0) return; 
     betPoint.textContent = 0;
     reset2x_activeEffect(); reset5x_activeEffect();
     checkOutLock = false;
@@ -1306,8 +1307,7 @@ const checkOut = document.querySelector('.check-out');
       winPointSetDefault(); //*
       saveData() //***
       isClosure();
-      // checkOutNoticeHowl.stop();
-      // checkOut.classList.remove('notification');
+      checkOut.classList.remove('active'); //*
     } else if(currentDept > total) { 
         deactivateBgmHowl(); //*
           outFailureHowl.play(); 
@@ -1513,7 +1513,7 @@ function loadImages() {
 const loader = document.querySelector('.loader');
 const iid_load = setInterval(() => {
   if(total > 0) { insertPoint.classList.add('active')} //*
-  if(total > 0 || currentDept > 0) { checkOut.classList.add('active')} //*
+  if(currentDept > 0) { checkOut.classList.add('active')} //*
   if(localStorage.hasOwnProperty('gameOver')) { isGameOver() }
   if(localStorage.hasOwnProperty('closure')) { isClosure() }
   if(loadCount === 4) {
