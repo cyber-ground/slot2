@@ -205,15 +205,15 @@ var spinHowl = new Howl({src: ['mp3/spin.mp3'], volume: 0.5});
 var autoStopHowl = new Howl({src: ['mp3/autoStop.mp3'],volume: 0.5});
 var outSuccessHowl = new Howl({src: ['mp3/outSuccess.mp3'],volume: 0.5});
 var outFailureHowl = new Howl({src: ['mp3/outFailure.mp3'],volume: 0.5});
+var checkOutNoticeHowl = new Howl({src: ['mp3/checkOutNotice.mp3'], volume: 0.5, loop: true});
 var cheerHowl = new Howl({src: ['mp3/cheer.mp3'],volume: 1});
 var cheerShortHowl = new Howl({src: ['mp3/cheerShort.mp3'],volume: 1});
 var coinTwoPairHowl = new Howl({src: ['mp3/coinTwoPair.mp3'],volume: 0.5});
 var coinTwoPairExtraHowl = new Howl({src: ['mp3/coinTwoPairExtra.mp3'],volume: 0.5});
 var winHowl = new Howl({src: ['mp3/win.mp3'],volume: 1});
 var victoryHowl = new Howl({src: ['mp3/victory.mp3'],volume: 1});
-var bigSpinHowl = new Howl({src: ['mp3/bigSpin.mp3'], loop: true, volume: 0.5});
 var freeSpinHowl = new Howl({src: ['mp3/freeSpin.mp3'], loop: true, volume: 0.5});
-var checkOutNoticeHowl = new Howl({src: ['mp3/checkOutNotice.mp3'], volume: 0.5, loop: true});
+var bigSpinHowl = new Howl({src: ['mp3/bigSpin.mp3'], loop: true, volume: 0.5});
 var bigSpinFailureHowl = new Howl({src: ['mp3/bigSpinFailure.mp3'], volume: 0.5});
 var tryAgainHowl = new Howl({src: ['mp3/tryAgain.mp3'], volume: 0.5,
   onplay: function() { tryAgainSound = true },
@@ -290,12 +290,13 @@ function setMachineVolume(vol) {
   panels.forEach(panel => { panel.stopBtn.Howl.volume(vol/1.5)});
   insertHowl.volume(vol); gameStartHowl.volume(vol);
   betXHowl.volume(vol); spinHowl.volume(vol);
-  autoStopHowl.volume(vol); outSuccessHowl.volume(vol); 
-  outFailureHowl.volume(vol); cheerHowl.volume(vol*5); 
+  autoStopHowl.volume(vol); checkOutNoticeHowl.volume(vol);
+  outFailureHowl.volume(vol); outSuccessHowl.volume(vol);
+  cheerHowl.volume(vol*5); cheerShortHowl.volume(vol*5);
   coinTwoPairHowl.volume(vol); coinTwoPairExtraHowl.volume(vol); 
   winHowl.volume(vol*3); victoryHowl.volume(vol*3); 
-  bigSpinHowl.volume(vol); bigSpinFailureHowl.volume(vol);
-  tryAgainHowl.volume(vol);
+  freeSpinHowl.volume(vol); bigSpinHowl.volume(vol); 
+  bigSpinFailureHowl.volume(vol); tryAgainHowl.volume(vol);
 }
 function deactivateBgmHowl() { bgmHowl.stop(); bgmHowlId = ''; }
 
