@@ -1548,7 +1548,7 @@ if(!sessionStorage.hasOwnProperty('threeSeven')) {
 const fetchImage = document.querySelector('.frame');
   function getFetchData(title, height, left, bottom, duration) {
     embedFrame = true;
-    const url = localStorage.getItem(title);
+    const url = sessionStorage.getItem(title);
     fetchImage.src = url; 
     fetchImage.style.setProperty('--left', left + '%');
     fetchImage.style.setProperty('--bottom', bottom + 'px');
