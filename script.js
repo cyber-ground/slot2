@@ -1509,9 +1509,9 @@ const failureId = [
   'oZvIA0CvREeSBaBBmy','35HUBD2bFW0HgTu1Ax', 'UHAQncqfXmLXaK2DVo', 'RWy5XUTI8SJSh69k4D'
 ]; //*>
 //* Remove failure Id ---
-if(localStorage.hasOwnProperty('fetchFailureId')) {
-  failureId.forEach((id, index) => localStorage.removeItem(index+1, id));
-  localStorage.removeItem('fetchFailureId')
+if(sessionStorage.hasOwnProperty('fetchFailureId')) {
+  failureId.forEach((id, index) => sessionStorage.removeItem(index+1, id));
+  sessionStorage.removeItem('fetchFailureId')
 }
 
 const fetchId = {
@@ -1537,11 +1537,11 @@ async function initFetch() {
     const response = await fetch(GIPHY_API);
     const data = await response.json(); 
     fetchImage.src = data.data.images.downsized_medium.url; 
-    localStorage.setItem(index[0], data.data.images.downsized_medium.url);
+    sessionStorage.setItem(index[0], data.data.images.downsized_medium.url);
   }
 } 
 
-if(!localStorage.hasOwnProperty('threeSeven')) {
+if(!sessionStorage.hasOwnProperty('threeSeven')) {
   initFetch(); console.log('fetched'); //* log
 }
 
